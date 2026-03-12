@@ -52,36 +52,34 @@ avance légèrement avant dissolve_frac pour aligner les formes avant de mélang
 # TODO: Discussion sur la métamorphose visage (N-1 → N)
 TEXTE_MORPH1 = """
 La métamorphose du visage donne un résultat globalement réussi et la transition entre les deux personnes reste fluide sur l’ensemble de la séquence.
-Les points de correspondance semblent bien placés au niveau des yeux, du nez, de la bouche et du contour du visage, ce qui aide beaucoup à garder une bonne cohérence visuelle.
-Les images intermédiaires montrent toutefois quelques déformations plus visibles dans les zones du front, des cheveux et des épaules, surtout quand les deux visages se superposent partiellement.
-On remarque aussi que l’arrière-plan se déforme légèrement, notamment près du miroir et des contours du mur, ce qui attire un peu l’attention dans certaines frames.
-Malgré cela, le mélange des couleurs et de la forme fonctionne bien, et le passage d’un visage à l’autre reste naturel et facile à suivre.
-Dans l’ensemble, le résultat est convaincant et montre que l’algorithme de morphing est bien fonctionnel, même s’il pourrait être amélioré avec encore plus de points dans les zones sensibles.
+Les points de correspondance semblent bien placés au niveau des yeux, du nez, de la bouche et du contour du visage, ce qui aide à conserver une bonne cohérence visuelle.
+Les problèmes sont surtout visibles au front, dans les cheveux, sur les épaules et légèrement dans le vêtement, surtout dans les images intermédiaires où les deux visages se superposent.
+L’arrière-plan se déforme aussi un peu près du miroir et des contours du mur, mais cela reste secondaire par rapport au visage.
+Dans l’ensemble, le résultat est à la hauteur de mes attentes et montre que l’algorithme fonctionne bien lorsque les traits principaux des deux visages sont correctement alignés.
 """
 
 # TODO: Discussion sur la métamorphose objets / animaux
 TEXTE_MORPH2 = """
-La métamorphose de la banane vers la pomme fonctionne assez bien et la transition reste facile à suivre tout au long de la séquence.
-J’ai choisi ce test pour utiliser deux formes très différentes et voir comment l’algorithme allait réagir malgré cette différence importante de silhouette.
-Le changement de forme est progressif, mais certaines images intermédiaires montrent des déformations plus marquées aux extrémités et près de la tige.
-Cela crée quelques artefacts visibles, mais le mélange des couleurs et de la géométrie reste tout de même convaincant.
-Dans l’ensemble, ce résultat est intéressant, car il montre que l’algorithme peut réussir une métamorphose même entre deux objets ayant une structure très différente.
+La métamorphose de la banane vers la pomme fonctionne bien et la transition reste facile à suivre du début à la fin.
+J’ai choisi ce test pour utiliser deux formes très différentes et voir comment l’algorithme allait réagir malgré cette grande différence de silhouette.
+Les problèmes sont surtout visibles aux extrémités et près de la tige, où certaines images intermédiaires montrent des déformations plus marquées.
+Malgré cela, le résultat reste intéressant et démontre que l’algorithme peut réussir une métamorphose même entre deux objets ayant une structure très différente.
 """
 
 # TODO: Discussion sur les photos personnelles #1
 TEXTE_MORPH3 = """
-La métamorphose entre le visage de départ et le Memoji donne un résultat visuellement intéressant, car le passage d’un visage plus réaliste vers un personnage stylisé reste clair et progressif.
-Les principales transformations se voient surtout au niveau des yeux, de la bouche, des cheveux et du contour du visage, qui changent beaucoup de forme pendant la séquence.
-Quelques artefacts apparaissent dans les images intermédiaires, surtout autour du front, de la mâchoire et de la bouche, puisque les proportions du Memoji sont très différentes de celles d’un vrai visage.
-Malgré cela, le résultat final est convaincant et montre bien que l’algorithme réussit à faire une transition fluide même entre deux styles visuels très différents.
+La métamorphose entre le crâne et le Memoji donne un résultat visuellement intéressant, car la transition entre deux styles très différents reste progressive et facile à suivre.
+J’ai choisi ce test pour voir comment l’algorithme se comporterait entre deux visuels stylisés ayant des proportions faciales très différentes.
+Les problèmes sont surtout visibles autour des yeux, de la bouche, de la mâchoire et du haut de la tête, où les formes changent beaucoup dans les images intermédiaires.
+Malgré cela, le résultat final est convaincant et il est globalement à la hauteur de mes attentes pour une métamorphose entre deux images aussi différentes.
 """
 
 # TODO: Discussion sur les photos personnelles #2
 TEXTE_MORPH4 = """
-La métamorphose du PCB vierge vers le PCB avec composantes donne un résultat propre et assez naturel, puisque les deux images ont la même taille générale et le même cadrage.
-J’ai choisi ce test pour voir comment l’algorithme se comporte avec deux objets de même grosseur, mais avec des différences surtout dans les détails ajoutés à la surface.
+La métamorphose du PCB vierge vers le PCB avec composantes donne un résultat propre et naturel, puisque les deux images ont la même taille générale et le même cadrage.
+J’ai choisi ce test pour vérifier comment l’algorithme se comporte avec deux objets de même grosseur, mais avec des différences surtout visibles dans les détails à la surface.
 Les images de départ ont été générées avec ChatGPT, ce qui m’a permis d’obtenir deux visuels très semblables et bien contrôlés pour ce type d’essai.
-Le résultat montre bien l’apparition progressive des composantes, même si quelques artefacts légers peuvent apparaître autour des zones les plus détaillées.
+Ce cas est à la hauteur de mes attentes et fonctionne bien, car la structure principale reste la même et seules les composantes apparaissent progressivement avec peu d’artefacts.
 """
 
 # TODO: Colle tes 2 prompts ChatGPT
