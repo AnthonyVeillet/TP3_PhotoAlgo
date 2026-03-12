@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎭 Rapport TP3 - &lt;votre nom&gt;</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap');
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8e8e8;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 0;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .date-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 20px;
+      border-radius: 20px;
+      margin-top: 12px;
+      font-size: 0.9em;
+      color: #b0b0b0;
+    }
+
+    .image-section {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .image-section h2 {
+      color: #778da9;
+      font-size: 1.6em;
+      margin: 0 0 25px 0;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(119, 141, 169, 0.25);
+    }
+
+    h3 {
+      color: #e0e1dd;
+      font-size: 1.3em;
+      margin: 26px 0 14px 0;
+    }
+
+    .figure-caption {
+      margin-top: 10px;
+      font-style: italic;
+      color: #a0a0a0;
+      font-size: 0.9em;
+    }
+
+    .comparison-pair {
+      background: rgba(0,0,0,0.25);
+      border-radius: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin: 16px 0;
+    }
+
+    .comparison-pair-title {
+      text-align: center;
+      color: #fff;
+      font-size: 1.05em;
+      font-weight: 600;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255,255,255,0.15);
+    }
+
+    .comparison-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .comparison-image-item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .comparison-image-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+
+    .comparison-image-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .comparison-image-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      color: #fff;
+      padding: 12px 8px 8px;
+      font-size: 0.85em;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* ---- Vidéo ---- */
+    .video-container {
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+    }
+
+    .video-container video {
+      max-width: 80%;
+      max-height: 520px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* ---- Bloc de texte (réponses) ---- */
+    .text-block {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 18px;
+      margin: 18px 0 0 0;
+    }
+
+    .text-block-title {
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+    }
+
+    .text-content {
+      color: #d0d0d0;
+      font-size: 1em;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+      font-size: 0.95em;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.92);
+      animation: fadeIn 0.2s;
+    }
+
+    .lightbox.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-content {
+      max-width: 95vw;
+      max-height: 95vh;
+      padding: 18px;
+    }
+
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 95vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.8);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 30px;
+      color: #fff;
+      font-size: 44px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s;
+      user-select: none;
+    }
+
+    .lightbox-close:hover {
+      color: #ffc107;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      .comparison-images { grid-template-columns: 1fr; }
+      .video-container video { max-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1>🎭 Rapport TP3 - &lt;votre nom&gt;</h1>
+      <div class="date-badge">Généré le 11 March 2026 à 23:44</div>
+    </header>
+
+    
+    <section class="image-section">
+        <h2>Partie 1 — Description de l'algorithme</h2>
+        
+    <div class="text-block">
+        <div class="text-block-title">📝 Description de l'algorithme</div>
+        <div class="text-content">L'algorithme de métamorphose fonctionne en plusieurs étapes. D'abord, les points de correspondance sont sélectionnés manuellement sur les deux images avec selectpoints.py,<br>puis des points de bordure sont ajoutés aux coins et bords de l'image pour couvrir l'arrière-plan. Une triangulation de Delaunay est ensuite calculée une seule fois sur la<br>moyenne des deux ensembles de points afin de minimiser la déformation des triangles. Pour chaque trame, des points intermédiaires sont calculés selon warp_frac, puis pour<br>chaque triangle, la transformation affine inverse est calculée manuellement (sans skimage.transform) afin de retrouver les coordonnées correspondantes dans les images<br>originales. L'interpolation des couleurs est effectuée avec RectBivariateSpline, et le fondu entre les deux images est pondéré par dissolve_frac. Finalement, warp_frac<br>avance légèrement avant dissolve_frac pour aligner les formes avant de mélanger les couleurs, tel que recommandé dans l'énoncé.</div>
+    </div>
+    
+    </section>
+    
+    
+    <section class="image-section">
+        <h2>Partie 2 — Métamorphose visage (N-1 → N)</h2>
+        <h3>Visage : Mbodj Khalifa (#53) → Veillet Anthony (#54)</h3>
+    <div class="comparison-pair">
+        <div class="comparison-pair-title">Images source et cible</div>
+        
+    <div class="comparison-images">
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="53_Mbodj_Khalifa.jpg" alt="Image source — 53_Mbodj_Khalifa" data-fullsize="53_Mbodj_Khalifa.jpg">
+            <div class="comparison-image-label">Image source — 53_Mbodj_Khalifa</div>
+        </div>
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="54_Veillet_Anthony.jpg" alt="Image cible — 54_Veillet_Anthony" data-fullsize="54_Veillet_Anthony.jpg">
+            <div class="comparison-image-label">Image cible — 54_Veillet_Anthony</div>
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="video-container">
+        <video controls loop>
+            <source src="morphing_1.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
+        <p class="figure-caption">Métamorphose visage (100 trames, 4s à 25fps)</p>
+    </div>
+    
+    <div class="text-block">
+        <div class="text-block-title">📝 Discussion</div>
+        <div class="text-content">La métamorphose du visage donne un résultat globalement réussi et la transition entre les deux personnes reste fluide sur l’ensemble de la séquence.<br>Les points de correspondance semblent bien placés au niveau des yeux, du nez, de la bouche et du contour du visage, ce qui aide beaucoup à garder une bonne cohérence visuelle.<br>Les images intermédiaires montrent toutefois quelques déformations plus visibles dans les zones du front, des cheveux et des épaules, surtout quand les deux visages se superposent partiellement.<br>On remarque aussi que l’arrière-plan se déforme légèrement, notamment près du miroir et des contours du mur, ce qui attire un peu l’attention dans certaines frames.<br>Malgré cela, le mélange des couleurs et de la forme fonctionne bien, et le passage d’un visage à l’autre reste naturel et facile à suivre.<br>Dans l’ensemble, le résultat est convaincant et montre que l’algorithme de morphing est bien fonctionnel, même s’il pourrait être amélioré avec encore plus de points dans les zones sensibles.</div>
+    </div>
+    
+    </section>
+    
+    
+    <section class="image-section">
+        <h2>Partie 3 — Métamorphose objets / animaux</h2>
+        <h3>Objets / Animaux</h3>
+    <div class="comparison-pair">
+        <div class="comparison-pair-title">Images source et cible</div>
+        
+    <div class="comparison-images">
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="Objet_1.jpg" alt="Objet 1" data-fullsize="Objet_1.jpg">
+            <div class="comparison-image-label">Objet 1</div>
+        </div>
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="Objet_2.jpg" alt="Objet 2" data-fullsize="Objet_2.jpg">
+            <div class="comparison-image-label">Objet 2</div>
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="video-container">
+        <video controls loop>
+            <source src="morphing_2.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
+        <p class="figure-caption">Métamorphose objets / animaux</p>
+    </div>
+    
+    <div class="text-block">
+        <div class="text-block-title">📝 Discussion</div>
+        <div class="text-content">La métamorphose de la banane vers la pomme fonctionne assez bien et la transition reste facile à suivre tout au long de la séquence.<br>J’ai choisi ce test pour utiliser deux formes très différentes et voir comment l’algorithme allait réagir malgré cette différence importante de silhouette.<br>Le changement de forme est progressif, mais certaines images intermédiaires montrent des déformations plus marquées aux extrémités et près de la tige.<br>Cela crée quelques artefacts visibles, mais le mélange des couleurs et de la géométrie reste tout de même convaincant.<br>Dans l’ensemble, ce résultat est intéressant, car il montre que l’algorithme peut réussir une métamorphose même entre deux objets ayant une structure très différente.</div>
+    </div>
+    
+    </section>
+    
+    
+    <section class="image-section">
+        <h2>Partie 4 — Photos personnelles #1</h2>
+        <h3>Photos personnelles #1</h3>
+    <div class="comparison-pair">
+        <div class="comparison-pair-title">Images source et cible</div>
+        
+    <div class="comparison-images">
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="perso1_img1.jpg" alt="Photo personnelle 1 — source" data-fullsize="perso1_img1.jpg">
+            <div class="comparison-image-label">Photo personnelle 1 — source</div>
+        </div>
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="perso1_img2.jpg" alt="Photo personnelle 1 — cible" data-fullsize="perso1_img2.jpg">
+            <div class="comparison-image-label">Photo personnelle 1 — cible</div>
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="video-container">
+        <video controls loop>
+            <source src="morphing_3.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
+        <p class="figure-caption">Métamorphose photos personnelles #1</p>
+    </div>
+    
+    <div class="text-block">
+        <div class="text-block-title">📝 Discussion</div>
+        <div class="text-content">La métamorphose entre le visage de départ et le Memoji donne un résultat visuellement intéressant, car le passage d’un visage plus réaliste vers un personnage stylisé reste clair et progressif.<br>Les principales transformations se voient surtout au niveau des yeux, de la bouche, des cheveux et du contour du visage, qui changent beaucoup de forme pendant la séquence.<br>Quelques artefacts apparaissent dans les images intermédiaires, surtout autour du front, de la mâchoire et de la bouche, puisque les proportions du Memoji sont très différentes de celles d’un vrai visage.<br>Malgré cela, le résultat final est convaincant et montre bien que l’algorithme réussit à faire une transition fluide même entre deux styles visuels très différents.</div>
+    </div>
+    
+    </section>
+    
+    
+    <section class="image-section">
+        <h2>Partie 5 — Photos personnelles #2</h2>
+        <h3>Photos personnelles #2</h3>
+    <div class="comparison-pair">
+        <div class="comparison-pair-title">Images source et cible</div>
+        
+    <div class="comparison-images">
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="perso2_img1.jpg" alt="Photo personnelle 2 — source" data-fullsize="perso2_img1.jpg">
+            <div class="comparison-image-label">Photo personnelle 2 — source</div>
+        </div>
+        <div class="comparison-image-item" onclick="openLightbox(this.querySelector('img'))">
+            <img src="perso2_img2.jpg" alt="Photo personnelle 2 — cible" data-fullsize="perso2_img2.jpg">
+            <div class="comparison-image-label">Photo personnelle 2 — cible</div>
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="video-container">
+        <video controls loop>
+            <source src="morphing_4.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
+        <p class="figure-caption">Métamorphose photos personnelles #2</p>
+    </div>
+    
+    <div class="text-block">
+        <div class="text-block-title">📝 Discussion</div>
+        <div class="text-content">La métamorphose du PCB vierge vers le PCB avec composantes donne un résultat propre et assez naturel, puisque les deux images ont la même taille générale et le même cadrage.<br>J’ai choisi ce test pour voir comment l’algorithme se comporte avec deux objets de même grosseur, mais avec des différences surtout dans les détails ajoutés à la surface.<br>Les images de départ ont été générées avec ChatGPT, ce qui m’a permis d’obtenir deux visuels très semblables et bien contrôlés pour ce type d’essai.<br>Le résultat montre bien l’apparition progressive des composantes, même si quelques artefacts légers peuvent apparaître autour des zones les plus détaillées.</div>
+    </div>
+    
+    </section>
+    
+    
+    <section class="image-section">
+        <h2>Partie 6 — Prompts ChatGPT utilisés</h2>
+        
+    <div class="text-block">
+        <div class="text-block-title">📝 Prompt #1 utilisé avec ChatGPT</div>
+        <div class="text-content">Yo<br>1) Analyse et comprend le travail que je dois faire en Python, soit TP3.pdf<br>2) J'ai déjà fait la section de ma photo pour placer les points demandé<br>3) Voici le code selectpoints.py, analyse et comprend le, il poura nous etre utile<br>4) Fait moi un plan détaillé de ce que je vais devoir faire ainsi qu'un plan des différents fichiers que je vasi devoir créer et faire. En d'autres mots, fait moi un squelette de ce que je vais devoir faire incluant les nom de variables et fonctions.<br>5) Je veux que tu agiste comme un tuteur pour favoriser mon apprentissage, donc ne me donne pas le code complet des différents fichier. Aussi, s'il te manque d'informations pour en compléter, dit moi le et ajoute des zones TODO expliquant quoi faire. De plus, pas besoin de faire la documentation Doxygen.<br>6) Donne moi une section commentaire que je vais mettre dans les fonctions qui expliquera se que fait cette fonction.<br>7) Ne t'occupe pas de la section des questions à répondre dans le rapport, pour l'instant.<br>8) Avant de donner ta réponse, analyse la pour etre certain qu'elle répond à mes critères et aux attentes de TP3.pdf. Tu n'as aucune limite de temps pour répondre. Mentionne  moi s'il te manque des informations où si quelque chose est pas clair</div>
+    </div>
+    
+    <div class="text-block">
+        <div class="text-block-title">📝 Prompt #2 utilisé avec ChatGPT</div>
+        <div class="text-content">Yo, garde ce code, mais est-ce possible qu'il affiche au terminal s'il a bien trouver les fichiers et si les fichier de output son valide et existant:<br><br>options = {<br>    1: {<br>        &quot;img1_path&quot;: &quot;../data/dataInput/14_Lebel_Philippe.jpg&quot;,<br>        &quot;img2_path&quot;: &quot;../data/dataInput/54_Veillet_Anthony.jpg&quot;,<br>        &quot;pts1_path&quot;: &quot;../data/dataInput/14_Lebel_Philippe.txt&quot;,<br>        &quot;pts2_path&quot;: &quot;../data/dataInput/54_Veillet_Anthony.txt&quot;,<br>        &quot;output_dir&quot;: &quot;../dataOutput/frames_1&quot;,<br>        &quot;video_output&quot;: &quot;../dataOutput/morphing_1.mp4&quot;,<br>    },<br>    2: {<br>        &quot;img1_path&quot;: &quot;../data/dataInput/Objet_1.jpg&quot;,<br>        &quot;img2_path&quot;: &quot;../data/dataInput/Objet_2.jpg&quot;,<br>        &quot;pts1_path&quot;: &quot;../data/dataInput/Objet_1.txt&quot;,<br>        &quot;pts2_path&quot;: &quot;../data/dataInput/Objet_2.txt&quot;,<br>        &quot;output_dir&quot;: &quot;../dataOutput/frames_2&quot;,<br>        &quot;video_output&quot;: &quot;../dataOutput/morphing_2.mp4&quot;,<br>    },<br>    3: {<br>        &quot;img1_path&quot;: &quot;../data/dataInput/perso1_img1.jpg&quot;,<br>        &quot;img2_path&quot;: &quot;../data/dataInput/perso1_img2.jpg&quot;,<br>        &quot;pts1_path&quot;: &quot;../data/dataInput/perso1_img1.txt&quot;,<br>        &quot;pts2_path&quot;: &quot;../data/dataInput/perso1_img2.txt&quot;,<br>        &quot;output_dir&quot;: &quot;../dataOutput/frames_3&quot;,<br>        &quot;video_output&quot;: &quot;../dataOutput/morphing_3.mp4&quot;,<br>    },<br>    4: {<br>        &quot;img1_path&quot;: &quot;../data/dataInput/perso2_img1.jpg&quot;,<br>        &quot;img2_path&quot;: &quot;../data/dataInput/perso2_img2.jpg&quot;,<br>        &quot;pts1_path&quot;: &quot;../data/dataInput/perso2_img1.txt&quot;,<br>        &quot;pts2_path&quot;: &quot;../data/dataInput/perso2_img2.txt&quot;,<br>        &quot;output_dir&quot;: &quot;../dataOutput/frames_4&quot;,<br>        &quot;video_output&quot;: &quot;../dataOutput/morphing_4.mp4&quot;,<br>    }<br>}<br><br>num_frames = 100<br>fps = 25<br><br>test = int(input(<br>    &quot;Quelle métamorphose faire:<br>&quot;<br>    &quot;1) Visage étudiant<br>&quot;<br>    &quot;2) Objets/Animaux<br>&quot;<br>    &quot;3) Animation perso 1<br>&quot;<br>    &quot;4) Animation perso 2<br>&quot;<br>    &quot;Entrez le choix entre 1 et 4: &quot;<br>))<br><br>if test not in options:<br>    raise ValueError(&quot;Choix invalide. Entrez un nombre entre 1 et 4.&quot;)<br><br>config = options[test]<br><br>img1_path = config[&quot;img1_path&quot;]<br>img2_path = config[&quot;img2_path&quot;]<br>pts1_path = config[&quot;pts1_path&quot;]<br>pts2_path = config[&quot;pts2_path&quot;]<br>output_dir = config[&quot;output_dir&quot;]<br>video_output = config[&quot;video_output&quot;]</div>
+    </div>
+    
+    </section>
+    
+
+    <footer>
+      <p>Photographie algorithmique — TP3 | Métamorphose de visages</p>
+    </footer>
+  </div>
+
+  <script>
+    function openLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const fullSizeSrc = img.getAttribute('data-fullsize') || img.src;
+      lightboxImg.src = fullSizeSrc;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(event) {
+      const lightbox = document.getElementById('lightbox');
+      if (event.target === lightbox || event.target.classList.contains('lightbox-close')) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  </script>
+</body>
+</html>

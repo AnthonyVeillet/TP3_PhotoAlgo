@@ -6,6 +6,8 @@ from matplotlib.path import Path
 
 def compute_affine(src_tri, dst_tri):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Calcule la matrice de transformation affine 2x3 qui transforme
     les points du triangle source vers le triangle destination.
 
@@ -20,12 +22,12 @@ def compute_affine(src_tri, dst_tri):
     --------
     T : ndarray (2, 3) — matrice de transformation affine
     """
-    # Matrice homogène des points source (3x3)
-    # Chaque colonne : [x, y, 1]^T
+    # Matrice homo points source (3x3)
+    # Chaque colonne [x, y, 1]^T
     src_h = np.array([
         [src_tri[0, 0], src_tri[1, 0], src_tri[2, 0]],
         [src_tri[0, 1], src_tri[1, 1], src_tri[2, 1]],
-        [1.0,           1.0,           1.0           ]
+        [1.0, 1.0, 1.0]
     ])
 
     # Matrice des points destination (2x3)
@@ -41,6 +43,8 @@ def compute_affine(src_tri, dst_tri):
 
 def compute_triangulation(pts1, pts2):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Calcule la triangulation de Delaunay sur la moyenne des deux ensembles
     de points. Cela minimise la déformation des triangles.
 
@@ -60,6 +64,8 @@ def compute_triangulation(pts1, pts2):
 
 def morph(img1, img2, img1_pts, img2_pts, tri, warp_frac, dissolve_frac):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Produit une image intermédiaire (métamorphose) entre img1 et img2.
 
     Algorithme :
@@ -91,7 +97,7 @@ def morph(img1, img2, img1_pts, img2_pts, tri, warp_frac, dissolve_frac):
     # Points intermédiaires
     mid_pts = (1.0 - warp_frac) * img1_pts + warp_frac * img2_pts
 
-    # Créer les interpolateurs pour chaque canal de chaque image
+    # Créer interpolateurs pour chaque canal de chaque image
     ys = np.arange(h)
     xs = np.arange(w)
 
@@ -115,7 +121,7 @@ def morph(img1, img2, img1_pts, img2_pts, tri, warp_frac, dissolve_frac):
         img1_tri = img1_pts[simplex]     # (3, 2) — triangle dans img1
         img2_tri = img2_pts[simplex]     # (3, 2) — triangle dans img2
 
-        # Boîte englobante du triangle intermédiaire (optimisation)
+        # Boite autour triangle intermédiaire
         min_x = max(0, int(np.floor(mid_tri[:, 0].min())))
         max_x = min(w - 1, int(np.ceil(mid_tri[:, 0].max())))
         min_y = max(0, int(np.floor(mid_tri[:, 1].min())))
@@ -124,14 +130,14 @@ def morph(img1, img2, img1_pts, img2_pts, tri, warp_frac, dissolve_frac):
         if min_x > max_x or min_y > max_y:
             continue
 
-        # Grille de pixels dans la boîte englobante
+        # Grille de pixels dans la boîte entourante
         xx, yy = np.meshgrid(
             np.arange(min_x, max_x + 1),
             np.arange(min_y, max_y + 1)
         )
         bbox_points = np.column_stack([xx.ravel(), yy.ravel()])  # (M, 2) en (x, y)
 
-        # Trouver les pixels à l'intérieur du triangle
+        # Trouver pixels dans le triangle
         path = Path(mid_tri)
         mask = path.contains_points(bbox_points)
 
@@ -140,11 +146,11 @@ def morph(img1, img2, img1_pts, img2_pts, tri, warp_frac, dissolve_frac):
 
         pixels_xy = bbox_points[mask]  # (K, 2) en (x, y)
 
-        # Transformations affines inverses : mid → img1 et mid → img2
+        # Transfo affines inverses
         T1 = compute_affine(mid_tri, img1_tri)
         T2 = compute_affine(mid_tri, img2_tri)
 
-        # Appliquer les transformations
+        # Appliquer les transfo
         ones = np.ones((pixels_xy.shape[0], 1))
         pixels_h = np.hstack([pixels_xy, ones])  # (K, 3)
 

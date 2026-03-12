@@ -6,6 +6,7 @@ Utile pour vérifier que les points et la triangulation sont corrects.
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.tri import Triangulation
+from pathlib import Path
 
 from morph import compute_triangulation
 from utils import load_image, load_points, add_border_points
@@ -14,10 +15,39 @@ from utils import load_image, load_points, add_border_points
 # =============================================================================
 # CHEMINS À MODIFIER SELON VOTRE CONFIGURATION
 # =============================================================================
-img1_path = "../data/dataInput/14_Lebel_Philippe.jpg"
-img2_path = "../data/dataInput/54_Veillet_Anthony.jpg"
-pts1_path = "../data/dataInput/14_Lebel_Philippe.txt"
-pts2_path = "../data/dataInput/54_Veillet_Anthony.txt"
+
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = BASE_DIR.parent
+
+img1_path = PROJECT_DIR / "data" / "dataInput" / "53_Mbodj_Khalifa.jpg"
+img2_path = PROJECT_DIR / "data" / "dataInput" / "54_Veillet_Anthony.jpg"
+pts1_path = PROJECT_DIR / "data" / "dataInput" / "53_Mbodj_Khalifa.txt"
+pts2_path = PROJECT_DIR / "data" / "dataInput" / "54_Veillet_Anthony.txt"
+
+print("\n--- Vérification des fichiers ---")
+
+files = {
+    "img1_path": img1_path,
+    "img2_path": img2_path,
+    "pts1_path": pts1_path,
+    "pts2_path": pts2_path
+}
+
+all_ok = True
+
+for name, path in files.items():
+    if path.is_file():
+        print(f"[OK] {name} trouvé : {path}")
+    else:
+        print(f"[ERREUR] {name} introuvable : {path}")
+        all_ok = False
+
+print("\n--- Résultat ---")
+
+if all_ok:
+    print("[OK] Tous les fichiers existent.")
+else:
+    print("[ERREUR] Certains fichiers sont manquants.")
 
 
 def visualize_single(img, pts, title="Image avec triangulation"):

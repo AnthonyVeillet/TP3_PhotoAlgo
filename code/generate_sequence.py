@@ -14,38 +14,41 @@ from utils import load_image, load_points, add_border_points, save_image
 # CHEMINS À MODIFIER SELON VOTRE CONFIGURATION
 # =============================================================================
 
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = BASE_DIR.parent
+
 options = {
     1: {
-        "img1_path": "../data/dataInput/53_Mbodj_Khalifa.jpg",
-        "img2_path": "../data/dataInput/54_Veillet_Anthony.jpg",
-        "pts1_path": "../data/dataInput/53_Mbodj_Khalifa.txt",
-        "pts2_path": "../data/dataInput/54_Veillet_Anthony.txt",
-        "output_dir": "../dataOutput/frames_1",
-        "video_output": "../dataOutput/morphing_1.mp4",
+        "img1_path": PROJECT_DIR / "data" / "dataInput" / "53_Mbodj_Khalifa.jpg",
+        "img2_path": PROJECT_DIR / "data" / "dataInput" / "54_Veillet_Anthony.jpg",
+        "pts1_path": PROJECT_DIR / "data" / "dataInput" / "53_Mbodj_Khalifa.txt",
+        "pts2_path": PROJECT_DIR / "data" / "dataInput" / "54_Veillet_Anthony.txt",
+        "output_dir": PROJECT_DIR / "data" / "dataOutput" / "frames_1",
+        "video_output": PROJECT_DIR / "data" / "dataOutput" / "morphing_1.mp4",
     },
     2: {
-        "img1_path": "../data/dataInput/Objet_1.jpg",
-        "img2_path": "../data/dataInput/Objet_2.jpg",
-        "pts1_path": "../data/dataInput/Objet_1.txt",
-        "pts2_path": "../data/dataInput/Objet_2.txt",
-        "output_dir": "../dataOutput/frames_2",
-        "video_output": "../dataOutput/morphing_2.mp4",
+        "img1_path": PROJECT_DIR / "data" / "dataInput" / "Objet_1.jpg",
+        "img2_path": PROJECT_DIR / "data" / "dataInput" / "Objet_2.jpg",
+        "pts1_path": PROJECT_DIR / "data" / "dataInput" / "Objet_1.txt",
+        "pts2_path": PROJECT_DIR / "data" / "dataInput" / "Objet_2.txt",
+        "output_dir": PROJECT_DIR / "data" / "dataOutput" / "frames_2",
+        "video_output": PROJECT_DIR / "data" / "dataOutput" / "morphing_2.mp4",
     },
     3: {
-        "img1_path": "../data/dataInput/perso1_img1.jpg",
-        "img2_path": "../data/dataInput/perso1_img2.jpg",
-        "pts1_path": "../data/dataInput/perso1_img1.txt",
-        "pts2_path": "../data/dataInput/perso1_img2.txt",
-        "output_dir": "../dataOutput/frames_3",
-        "video_output": "../dataOutput/morphing_3.mp4",
+        "img1_path": PROJECT_DIR / "data" / "dataInput" / "perso1_img1.jpg",
+        "img2_path": PROJECT_DIR / "data" / "dataInput" / "perso1_img2.jpg",
+        "pts1_path": PROJECT_DIR / "data" / "dataInput" / "perso1_img1.txt",
+        "pts2_path": PROJECT_DIR / "data" / "dataInput" / "perso1_img2.txt",
+        "output_dir": PROJECT_DIR / "data" / "dataOutput" / "frames_3",
+        "video_output": PROJECT_DIR / "data" / "dataOutput" / "morphing_3.mp4",
     },
     4: {
-        "img1_path": "../data/dataInput/perso2_img1.jpg",
-        "img2_path": "../data/dataInput/perso2_img2.jpg",
-        "pts1_path": "../data/dataInput/perso2_img1.txt",
-        "pts2_path": "../data/dataInput/perso2_img2.txt",
-        "output_dir": "../dataOutput/frames_4",
-        "video_output": "../dataOutput/morphing_4.mp4",
+        "img1_path": PROJECT_DIR / "data" / "dataInput" / "perso2_img1.jpg",
+        "img2_path": PROJECT_DIR / "data" / "dataInput" / "perso2_img2.jpg",
+        "pts1_path": PROJECT_DIR / "data" / "dataInput" / "perso2_img1.txt",
+        "pts2_path": PROJECT_DIR / "data" / "dataInput" / "perso2_img2.txt",
+        "output_dir": PROJECT_DIR / "data" / "dataOutput" / "frames_4",
+        "video_output": PROJECT_DIR / "data" / "dataOutput" / "morphing_4.mp4",
     }
 }
 
@@ -74,8 +77,63 @@ output_dir = config["output_dir"]
 video_output = config["video_output"]
 
 
+# Section pour vérifier les fichiers fait avec ChatGPT pour être efficace
+print("\n--- Vérification des fichiers d'entrée ---")
+
+input_files = {
+    "img1_path": img1_path,
+    "img2_path": img2_path,
+    "pts1_path": pts1_path,
+    "pts2_path": pts2_path,
+}
+
+all_paths_valid = True
+
+for name, path in input_files.items():
+    if path.is_file():
+        print(f"[OK] {name} trouvé : {path}")
+    else:
+        print(f"[ERREUR] {name} introuvable : {path}")
+        all_paths_valid = False
+
+print("\n--- Vérification des sorties ---")
+
+if output_dir.exists():
+    if output_dir.is_dir():
+        print(f"[OK] output_dir existe : {output_dir}")
+    else:
+        print(f"[ERREUR] output_dir existe mais ce n'est pas un dossier : {output_dir}")
+        all_paths_valid = False
+else:
+    print(f"[INFO] output_dir n'existe pas encore, il sera créé : {output_dir}")
+
+video_parent = video_output.parent
+
+if video_parent.exists():
+    if video_parent.is_dir():
+        print(f"[OK] Dossier parent de video_output existe : {video_parent}")
+    else:
+        print(f"[ERREUR] Le parent de video_output n'est pas un dossier : {video_parent}")
+        all_paths_valid = False
+else:
+    print(f"[ERREUR] Le dossier parent de video_output n'existe pas : {video_parent}")
+    all_paths_valid = False
+
+print("\n--- Résultat final ---")
+if all_paths_valid:
+    print("[OK] Tous les chemins nécessaires sont valides.")
+else:
+    print("[ERREUR] Certains chemins sont invalides. Vérifie les messages ci-dessus.")
+
+
+# =============================================================================
+# SECTION CODE
+# =============================================================================
+
 def generate_frames(img1, img2, pts1, pts2, tri, num_frames, output_dir):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Génère les trames de la métamorphose et les sauvegarde en PNG.
 
     Le warp_frac et dissolve_frac varient linéairement de 0 à 1 sur
@@ -89,12 +147,12 @@ def generate_frames(img1, img2, pts1, pts2, tri, num_frames, output_dir):
     for i in range(num_frames):
         t = i / (num_frames - 1)  # t varie de 0 à 1
 
-        # Stratégie : warp_frac mène légèrement devant dissolve_frac
-        # Cela permet d'aligner les formes avant de fondre les couleurs
+        # Stratégie (énoncé) warp_frac mène légèrement devant dissolve_frac
+        # Permet d'aligner les formes avant de fondre les couleurs
         warp_frac = np.clip(t * 1.2, 0, 1)
         dissolve_frac = np.clip(t * 1.2 - 0.2, 0, 1)
 
-        # Alternative simple : les deux linéaires (décommenter si désiré)
+        # Alternative si les deux linéaires
         # warp_frac = t
         # dissolve_frac = t
 
@@ -110,6 +168,8 @@ def generate_frames(img1, img2, pts1, pts2, tri, num_frames, output_dir):
 
 def create_video(frames_dir, output_video, fps=25):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Crée un fichier vidéo MP4 à partir des trames PNG avec ffmpeg.
     """
     frames_pattern = str(Path(frames_dir) / "frame_%05d.png")
@@ -152,7 +212,7 @@ assert pts1.shape == pts2.shape, \
 pts1 = add_border_points(pts1, img1.shape)
 pts2 = add_border_points(pts2, img2.shape)
 
-# Calculer la triangulation une seule fois (sur la moyenne des points)
+# Calculer la triangulation 1x (sur la moyenne des points)
 print("Calcul de la triangulation de Delaunay...")
 tri = compute_triangulation(pts1, pts2)
 print(f"  -> {len(tri.simplices)} triangles générés")
