@@ -5,6 +5,8 @@ from pathlib import Path
 
 def load_points(filepath):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Charge les points d'intérêt depuis un fichier texte.
     Le format attendu est celui de selectpoints.py : \tx\ty par ligne.
     Les coordonnées sont en (x, y), i.e. (colonne, ligne).
@@ -22,6 +24,8 @@ def load_points(filepath):
 
 def load_image(filepath):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Charge une image et la convertit en float64 dans [0, 1].
     """
     img = io.imread(str(filepath))
@@ -35,6 +39,8 @@ def load_image(filepath):
 
 def add_border_points(points, img_shape):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Ajoute des points en bordure de l'image pour gérer l'arrière-plan.
     On ajoute les 4 coins + des points intermédiaires sur les bords
     pour une meilleure couverture de l'image entière.
@@ -71,6 +77,8 @@ def add_border_points(points, img_shape):
 
 def save_image(img, filepath):
     """
+    Commentaire explicatif fait pas ChatGPT
+
     Sauvegarde une image float [0, 1] en fichier PNG (uint8).
     """
     img_uint8 = np.clip(img * 255, 0, 255).astype(np.uint8)
