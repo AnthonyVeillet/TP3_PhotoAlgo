@@ -1,19 +1,23 @@
 """
 Script utilitaire pour visualiser la triangulation de Delaunay sur les images.
 Utile pour vérifier que les points et la triangulation sont corrects.
-
-Utilisation :
-    python visualize.py --img path/to/image.png --pts path/to/points.txt
-    python visualize.py --img1 img1.png --img2 img2.png --pts1 pts1.txt --pts2 pts2.txt
 """
 
-import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.tri import Triangulation
 
 from morph import compute_triangulation
 from utils import load_image, load_points, add_border_points
+
+
+# =============================================================================
+# CHEMINS À MODIFIER SELON VOTRE CONFIGURATION
+# =============================================================================
+img1_path = "../data/dataInput/14_Lebel_Philippe.jpg"
+img2_path = "../data/dataInput/54_Veillet_Anthony.jpg"
+pts1_path = "../data/dataInput/14_Lebel_Philippe.txt"
+pts2_path = "../data/dataInput/54_Veillet_Anthony.txt"
 
 
 def visualize_single(img, pts, title="Image avec triangulation"):
@@ -59,28 +63,19 @@ def visualize_triangulation(img1, img2, pts1, pts2):
     return tri
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Visualisation de la triangulation")
-    parser.add_argument("--img1", type=str, required=True, help="Image 1")
-    parser.add_argument("--img2", type=str, required=True, help="Image 2")
-    parser.add_argument("--pts1", type=str, required=True, help="Points de l'image 1")
-    parser.add_argument("--pts2", type=str, required=True, help="Points de l'image 2")
+# =============================================================================
+# EXÉCUTION
+# =============================================================================
 
-    args = parser.parse_args()
+img1 = load_image(img1_path)
+img2 = load_image(img2_path)
+pts1 = load_points(pts1_path)
+pts2 = load_points(pts2_path)
 
-    img1 = load_image(args.img1)
-    img2 = load_image(args.img2)
-    pts1 = load_points(args.pts1)
-    pts2 = load_points(args.pts2)
+print(f"Image 1 : {img1.shape}")
+print(f"Image 2 : {img2.shape}")
+print(f"Points 1 : {pts1.shape[0]} points")
+print(f"Points 2 : {pts2.shape[0]} points")
 
-    print(f"Image 1 : {img1.shape}")
-    print(f"Image 2 : {img2.shape}")
-    print(f"Points 1 : {pts1.shape[0]} points")
-    print(f"Points 2 : {pts2.shape[0]} points")
-
-    tri = visualize_triangulation(img1, img2, pts1, pts2)
-    print(f"Triangulation : {len(tri.simplices)} triangles")
-
-
-if __name__ == "__main__":
-    main()
+tri = visualize_triangulation(img1, img2, pts1, pts2)
+print(f"Triangulation : {len(tri.simplices)} triangles")
